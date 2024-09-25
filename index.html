@@ -32,11 +32,9 @@
             left: 50%;
             width: 100%;
             height: 100%;
-            max-width: none;
-            max-height: none;
             transform: translate(-50%, -50%);
             z-index: -1;
-            object-fit: contain; /* Ensure the entire video is visible */
+            object-fit: cover; /* Cover ensures the video fills the screen without distortion */
             background-color: black; /* Fallback background */
             transition: object-fit 0.5s ease;
         }
@@ -106,7 +104,7 @@
 
             #background-video {
                 display: block;
-                object-fit: contain; /* Ensure full video is visible */
+                object-fit: cover; /* Ensure the video covers the screen */
             }
 
             body {
@@ -148,7 +146,7 @@
 </head>
 <body>
     <!-- Background Video -->
-    <video id="background-video" autoplay muted loop>
+    <video id="background-video" autoplay muted loop playsinline>
         <source src="background.mp4" type="video/mp4">
         <source src="background.webm" type="video/webm">
         Your browser does not support the video tag.
@@ -182,14 +180,19 @@
                 // Landscape Mode
                 rotateMessage.style.display = 'none';
                 backgroundVideo.style.display = 'block';
-                // Ensure object-fit is set to contain
-                backgroundVideo.style.objectFit = 'contain';
+                // Ensure object-fit is set to cover
+                backgroundVideo.style.objectFit = 'cover';
+                console.log('Orientation: Landscape');
             } else {
                 // Portrait Mode
                 rotateMessage.style.display = 'flex';
                 backgroundVideo.style.display = 'none';
-                // Optionally pause the audio
-                audio.pause();
+                // Pause the audio if it's playing
+                if (!audio.paused) {
+                    audio.pause();
+                    console.log('Audio paused due to portrait mode.');
+                }
+                console.log('Orientation: Portrait');
             }
         }
 
@@ -200,6 +203,8 @@
         window.addEventListener('resize', handleOrientationChange);
 
         startButton.addEventListener('click', () => {
+            console.log('Start button clicked.');
+
             // Play the audio
             audio.play().then(() => {
                 console.log('Audio started.');
@@ -212,11 +217,9 @@
 
             // Listen for when the audio ends to redirect
             audio.addEventListener('ended', () => {
+                console.log('Audio ended. Redirecting...');
                 window.location.href = 'address.html';
             });
-
-            // **Remove or comment out the line that hides the video**
-            // backgroundVideo.style.display = 'none';
         });
     </script>
 </body>
