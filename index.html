@@ -28,12 +28,17 @@
         /* Video Background */
         #background-video {
             position: fixed;
-            top: 0;
-            left: 0;
-            min-width: 100%;
-            min-height: 100%;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            max-height: none;
+            transform: translate(-50%, -50%);
             z-index: -1;
-            object-fit: cover;
+            object-fit: contain; /* Ensure the entire video is visible */
+            background-color: black; /* Fallback background */
+            transition: object-fit 0.5s ease;
         }
 
         /* Start Screen Overlay */
@@ -93,10 +98,15 @@
             z-index: 9999;
         }
 
-        /* Show the rotate message and adjust background when in portrait */
-        @media only screen and (orientation: portrait) {
+        /* Adjust video and overlays based on orientation */
+        @media only screen and (orientation: landscape) {
             #rotate-message {
-                display: flex; /* Show the rotate message */
+                display: none; /* Hide the rotate message */
+            }
+
+            #background-video {
+                display: block;
+                object-fit: contain; /* Ensure full video is visible */
             }
 
             body {
@@ -104,7 +114,22 @@
             }
 
             #start-screen {
+                display: flex; /* Show the start screen in landscape */
+            }
+        }
+
+        @media only screen and (orientation: portrait) {
+            #rotate-message {
+                display: flex; /* Show the rotate message */
+            }
+
+            #start-screen {
                 display: none; /* Hide the start screen in portrait */
+            }
+
+            /* Hide the video in portrait mode to save resources */
+            #background-video {
+                display: none;
             }
         }
 
@@ -125,6 +150,7 @@
     <!-- Background Video -->
     <video id="background-video" autoplay muted loop>
         <source src="background.mp4" type="video/mp4">
+        <source src="background.webm" type="video/webm">
         Your browser does not support the video tag.
     </video>
 
@@ -135,7 +161,7 @@
 
     <!-- Start Screen Overlay -->
     <div id="start-screen">
-        <button id="start-button">
+        <button id="start-button" aria-label="Start the experience">
             ▶️ Start
         </button>
     </div>
@@ -147,6 +173,31 @@
         const startButton = document.getElementById('start-button');
         const startScreen = document.getElementById('start-screen');
         const audio = document.getElementById('background-audio');
+        const backgroundVideo = document.getElementById('background-video');
+        const rotateMessage = document.getElementById('rotate-message');
+
+        // Function to handle orientation changes
+        function handleOrientationChange() {
+            if (window.innerWidth > window.innerHeight) {
+                // Landscape Mode
+                rotateMessage.style.display = 'none';
+                backgroundVideo.style.display = 'block';
+                // Ensure object-fit is set to contain
+                backgroundVideo.style.objectFit = 'contain';
+            } else {
+                // Portrait Mode
+                rotateMessage.style.display = 'flex';
+                backgroundVideo.style.display = 'none';
+                // Optionally pause the audio
+                audio.pause();
+            }
+        }
+
+        // Initial check on page load
+        window.addEventListener('load', handleOrientationChange);
+
+        // Listen for orientation changes
+        window.addEventListener('resize', handleOrientationChange);
 
         startButton.addEventListener('click', () => {
             // Play the audio
@@ -163,13 +214,9 @@
             audio.addEventListener('ended', () => {
                 window.location.href = 'address.html';
             });
-        });
 
-        // Optional: Prevent audio from playing when in portrait mode by pausing it
-        window.addEventListener('resize', () => {
-            if (window.innerWidth < window.innerHeight) {
-                audio.pause();
-            }
+            // **Remove or comment out the line that hides the video**
+            // backgroundVideo.style.display = 'none';
         });
     </script>
 </body>
