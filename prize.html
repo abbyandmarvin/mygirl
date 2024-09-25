@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 Congratulations! You Won! 🎉</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background-color: #151b2b;
+        }
+
+        /* Container Setup */
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Background Image with Enhanced Animation */
+        .background-image {
+            position: absolute;
+            width: 110%;
+            height: 110%;
+            background-image: url('abby.jpg'); /* Update the path as needed */
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.7);
+            animation: backgroundPan 20s ease-in-out infinite alternate;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        @keyframes backgroundPan {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.05) translate(-2%, -2%); }
+        }
+
+        /* Confetti Animation Enhancements */
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: var(--confetti-color);
+            opacity: 0.8;
+            top: -10px;
+            animation: confettiFall var(--fall-duration) linear infinite;
+            border-radius: 50%;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Sparkle Effect */
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: sparkle 1.5s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* Text Overlay with Colorful Gradient */
+        .text-overlay {
+            position: relative;
+            font-size: 4rem;
+            text-align: center;
+            padding: 30px 50px;
+            z-index: 10;
+            background: rgba(21, 27, 43, 0.85);
+            border: 2px solid #fffae3;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+            animation: pulse 2s infinite;
+            transform: scale(1);
+            transition: transform 0.3s ease-in-out;
+            /* Gradient Text */
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .text-overlay {
+                font-size: 2.5rem;
+                padding: 20px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Background Image -->
+        <div class="background-image"></div>
+
+        <!-- Confetti Elements (Generated via JavaScript) -->
+
+        <!-- Sparkle Elements (Generated via JavaScript) -->
+
+        <!-- Text Overlay -->
+        <div class="text-overlay">🎉 Congratulations! You Won! 🎉</div>
+
+        <!-- Audio Element -->
+        <audio id="celebration-audio" src="celebration.mp3" autoplay loop></audio>
+    </div>
+
+    <!-- Optional JavaScript for Enhanced Effects -->
+    <script>
+        // Generate Confetti
+        const container = document.querySelector('.container');
+        const colors = ['#FFC700', '#FF5733', '#C70039', '#900C3F', '#581845', '#FF33F6', '#33FFF6', '#33FF57', '#335BFF', '#8D33FF'];
+        const numConfetti = 100;
+
+        for (let i = 0; i < numConfetti; i++) {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.setProperty('--confetti-color', colors[Math.floor(Math.random() * colors.length)]);
+            confetti.style.setProperty('--fall-duration', `${(Math.random() * 3 + 4).toFixed(2)}s`);
+            confetti.style.left = `${Math.random() * 100}%`;
+            confetti.style.width = `${Math.random() * 7 + 3}px`;
+            confetti.style.height = confetti.style.width;
+            confetti.style.animationDelay = `${Math.random() * 5}s`;
+            container.appendChild(confetti);
+        }
+
+        // Generate Sparkles
+        const sparkleCount = 30;
+        for (let i = 0; i < sparkleCount; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.style.top = `${Math.random() * 100}%`;
+            sparkle.style.left = `${Math.random() * 100}%`;
+            sparkle.style.animationDelay = `${Math.random() * 2}s`;
+            sparkle.style.width = `${Math.random() * 3 + 2}px`;
+            sparkle.style.height = sparkle.style.width;
+            container.appendChild(sparkle);
+        }
+
+        // Audio Controls (Optional: Allow user to control audio)
+        const audio = document.getElementById('celebration-audio');
+        audio.volume = 0.5; // Set initial volume
+
+        // Toggle audio on container click
+        container.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        });
+    </script>
+</body>
+</html>
