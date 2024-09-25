@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unlock Your Prize!</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #333;
+        }
+
+        /* Container Setup */
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px 60px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Riddle Styling */
+        .riddle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        /* Input and Button Styling */
+        .input-group {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1rem;
+            border: 2px solid #fda085;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            width: 60%;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #f6d365;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #fda085;
+            color: white;
+            cursor: pointer;
+            border-radius: 0 5px 5px 0;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #f6d365;
+        }
+
+        /* Feedback Styling */
+        .feedback {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            height: 1.2rem;
+            color: #d9534f; /* Default to red for incorrect */
+        }
+
+        .feedback.correct {
+            color: #5cb85c;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 30px;
+            }
+
+            .riddle {
+                font-size: 1.2rem;
+            }
+
+            input[type="text"] {
+                width: 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Solve the Riddle to Unlock Your Prize! 🔍</h1>
+        <p class="riddle">I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?</p>
+        <div class="input-group">
+            <input type="text" id="answer-input" placeholder="Enter your answer here">
+            <button id="submit-button">Submit</button>
+        </div>
+        <div class="feedback" id="feedback"></div>
+    </div>
+
+    <script>
+        const correctAnswer = "echo"; // The correct answer to the riddle
+        const submitButton = document.getElementById('submit-button');
+        const answerInput = document.getElementById('answer-input');
+        const feedback = document.getElementById('feedback');
+
+        submitButton.addEventListener('click', () => {
+            const userAnswer = answerInput.value.trim().toLowerCase();
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = "🎉 Correct! Redirecting to your prize... 🎉";
+                feedback.classList.add('correct');
+                // Redirect after a short delay to allow user to read the feedback
+                setTimeout(() => {
+                    window.location.href = 'prize.html'; // Link to your prize-winning page
+                }, 2000);
+            } else {
+                feedback.textContent = "❌ Incorrect answer. Please try again!";
+                feedback.classList.remove('correct');
+            }
+        });
+
+        // Allow pressing 'Enter' key to submit the answer
+        answerInput.addEventListener('keyup', (event) => {
+            if (event.key === 'Enter') {
+                submitButton.click();
+            }
+        });
+    </script>
+</body>
+</html>
