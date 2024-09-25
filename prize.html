@@ -3,199 +3,296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎉 Congratulations! You Won! 🎉</title>
+    <title>🔒 Unlock Your Prize! 🔓</title>
     <style>
-        /* Reset and Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body, html {
+        /* Basic Styles */
+        html, body {
             height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
-            background-color: #151b2b;
+            margin: 0;
+            font-family: Arial, sans-serif;
         }
 
-        /* Container Setup */
-        .container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
+        body {
+            /* Default Background Image with gradient overlay */
+            background-image: 
+                linear-gradient(135deg, rgba(1, 171, 250, 0.4) 0%, rgba(24, 44, 218, 0.4) 100%),
+                url('abby-landscape.jpg'); /* Default to landscape */
+            background-size: cover; /* Ensure the image covers the entire background */
+            background-position: center center; /* Center the image both vertically and horizontally */
+            background-repeat: no-repeat; /* Prevent the image from repeating */
+            background-blend-mode: overlay; /* Blend the gradient and image */
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            padding: 20px; /* Add padding for smaller screens */
+            box-sizing: border-box;
+            transition: transform 0.3s ease, background-image 0.3s ease;
         }
 
-        /* Background Image with Enhanced Animation */
-        .background-image {
-            position: absolute;
-            width: 110%;
-            height: 110%;
-            background-image: url('abby.jpg'); /* Update the path as needed */
-            background-size: cover;
-            background-position: center;
-            filter: brightness(0.7);
-            animation: backgroundPan 20s ease-in-out infinite alternate;
-            transition: transform 0.5s ease-in-out;
-        }
-
-        @keyframes backgroundPan {
-            0% { transform: scale(1) translate(0, 0); }
-            100% { transform: scale(1.05) translate(-2%, -2%); }
-        }
-
-        /* Confetti Animation Enhancements */
-        .confetti {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background-color: var(--confetti-color);
-            opacity: 0.8;
-            top: -10px;
-            animation: confettiFall var(--fall-duration) linear infinite;
-            border-radius: 50%;
-        }
-
-        @keyframes confettiFall {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
-        }
-
-        /* Sparkle Effect */
-        .sparkle {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: sparkle 1.5s infinite;
-        }
-
-        @keyframes sparkle {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.8;
-            }
-            50% {
-                transform: scale(1.5);
-                opacity: 0;
-            }
-        }
-
-        /* Text Overlay with Colorful Gradient */
-        .text-overlay {
-            position: relative;
-            font-size: 4rem;
+        /* Overlay message for portrait mode */
+        #rotate-message {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            font-size: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            padding: 30px 50px;
-            z-index: 10;
-            background: rgba(21, 27, 43, 0.85);
-            border: 2px solid #fffae3;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
-            animation: pulse 2s infinite;
-            transform: scale(1);
-            transition: transform 0.3s ease-in-out;
-            /* Gradient Text */
-            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 9999;
         }
 
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+        /* Rotate container when in portrait */
+        @media only screen and (orientation: portrait) {
+            body {
+                /* Rotate the container */
+                transform: rotate(90deg);
+                transform-origin: left top;
+                width: 100vh;
+                height: 100vw;
+                overflow-x: hidden;
+                position: absolute;
+                top: 100%;
+                left: 0;
             }
-            50% {
-                transform: scale(1.05);
-                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9);
+            #rotate-message {
+                display: flex; /* Show the rotate message */
             }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
-            }
+
+            /* Change background to portrait-friendly image */
+            background-image: 
+                linear-gradient(135deg, rgba(1, 171, 250, 0.4) 0%, rgba(24, 44, 218, 0.4) 100%),
+                url('abby-portrait.jpg'); /* Use a portrait-friendly image */
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .text-overlay {
-                font-size: 2.5rem;
-                padding: 20px 30px;
+        .container {
+            background: rgba(255,255,255,0.9);
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: 2px solid #fda085;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            max-width: 200px;
+            padding: 12px 20px;
+            margin: 10px 0;
+            border: none;
+            background-color: #fda085;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #f6d365;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            font-size: 1rem;
+            color: #d9534f; /* Red for errors */
+        }
+
+        .feedback.correct {
+            color: #5cb85c; /* Green for success */
+        }
+
+        .password-reveal {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e2e2e2;
+            border-radius: 5px;
+            word-wrap: break-word;
+            font-family: monospace;
+            display: none;
+            font-size: 1rem;
+        }
+
+        /* New Redirect Button Style */
+        .redirect-button {
+            margin-top: 15px;
+            padding: 12px 20px;
+            border: none;
+            background-color: #4CAF50; /* Green */
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: none; /* Hidden by default */
+            width: 100%;
+            max-width: 200px;
+            transition: background-color 0.3s ease;
+        }
+
+        .redirect-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            p {
+                font-size: 0.9rem;
+            }
+
+            input[type="text"], button, .redirect-button {
+                font-size: 0.9rem;
+                padding: 10px 15px;
+            }
+
+            .password-reveal {
+                font-size: 0.9rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Rotate Message Overlay -->
+    <div id="rotate-message">
+        📱 Please rotate your device to landscape mode for the best experience. 📱
+    </div>
+    
     <div class="container">
-        <!-- Background Image -->
-        <div class="background-image"></div>
-
-        <!-- Confetti Elements (Generated via JavaScript) -->
-
-        <!-- Sparkle Elements (Generated via JavaScript) -->
-
-        <!-- Text Overlay -->
-        <div class="text-overlay">🎉 Congratulations! You Won! 🎉</div>
-
-        <!-- Audio Element -->
-        <audio id="celebration-audio" src="celebration.mp3" autoplay loop></audio>
+        <h1>🔍 Solve the Riddle to Unlock Your Secret ~! 🎁</h1>
+        <p>A place we met. If you follow yellow you are correct, but if you follow green you gonna meet its brother, quiet similar indeed but also far.</p>
+        <input type="text" id="riddle-answer" placeholder="Enter your answer here">
+        <button id="submit-answer">Submit</button>
+        <div class="feedback" id="feedback"></div>
+        <div class="password-reveal" id="password-reveal">
+            Your password is: <strong id="password"></strong>
+        </div>
+        <!-- New Redirect Button -->
+        <button class="redirect-button" id="redirect-button">Go to Prize Page</button>
     </div>
 
-    <!-- Optional JavaScript for Enhanced Effects -->
+    <!-- Include CryptoJS Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
-        // Generate Confetti
-        const container = document.querySelector('.container');
-        const colors = ['#FFC700', '#FF5733', '#C70039', '#900C3F', '#581845', '#FF33F6', '#33FFF6', '#33FF57', '#335BFF', '#8D33FF'];
-        const numConfetti = 100;
+        // Precomputed SHA-256 Hash of 'echo'
+        const correctHash = '5ddcb863bd9ad30c653b5947c2903942619e9edb243401ea21e49763ad27d251';
 
-        for (let i = 0; i < numConfetti; i++) {
-            const confetti = document.createElement('div');
-            confetti.classList.add('confetti');
-            confetti.style.setProperty('--confetti-color', colors[Math.floor(Math.random() * colors.length)]);
-            confetti.style.setProperty('--fall-duration', `${(Math.random() * 3 + 4).toFixed(2)}s`);
-            confetti.style.left = `${Math.random() * 100}%`;
-            confetti.style.width = `${Math.random() * 7 + 3}px`;
-            confetti.style.height = confetti.style.width;
-            confetti.style.animationDelay = `${Math.random() * 5}s`;
-            container.appendChild(confetti);
+        // Encrypted Password (AES encrypted with key 'echo')
+        const encryptedPassword = 'U2FsdGVkX19VnpNoNQ6PZalpD6kQmV28zAPAf/tIA2w='; // Replace with your actual encrypted password
+
+        // Function to hash user input using SHA-256
+        async function hashInput(input) {
+            const hash = CryptoJS.SHA256(input).toString();
+            return hash;
         }
 
-        // Generate Sparkles
-        const sparkleCount = 30;
-        for (let i = 0; i < sparkleCount; i++) {
-            const sparkle = document.createElement('div');
-            sparkle.classList.add('sparkle');
-            sparkle.style.top = `${Math.random() * 100}%`;
-            sparkle.style.left = `${Math.random() * 100}%`;
-            sparkle.style.animationDelay = `${Math.random() * 2}s`;
-            sparkle.style.width = `${Math.random() * 3 + 2}px`;
-            sparkle.style.height = sparkle.style.width;
-            container.appendChild(sparkle);
-        }
-
-        // Audio Controls (Optional: Allow user to control audio)
-        const audio = document.getElementById('celebration-audio');
-        audio.volume = 0.5; // Set initial volume
-
-        // Toggle audio on container click
-        container.addEventListener('click', () => {
-            if (audio.paused) {
-                audio.play();
-            } else {
-                audio.pause();
+        // Function to decrypt the password using AES
+        function decryptPassword(encrypted, key) {
+            try {
+                const decrypted = CryptoJS.AES.decrypt(encrypted, key);
+                const originalPassword = decrypted.toString(CryptoJS.enc.Utf8);
+                if (!originalPassword) {
+                    throw new Error('Decryption returned empty string');
+                }
+                return originalPassword;
+            } catch (error) {
+                console.error('Decryption error:', error);
+                return null;
             }
+        }
+
+        const submitButton = document.getElementById('submit-answer');
+        const answerInput = document.getElementById('riddle-answer');
+        const feedback = document.getElementById('feedback');
+        const passwordReveal = document.getElementById('password-reveal');
+        const passwordElement = document.getElementById('password');
+        const redirectButton = document.getElementById('redirect-button'); // New Button
+
+        submitButton.addEventListener('click', async () => {
+            const userAnswer = answerInput.value.trim().toLowerCase();
+            if (userAnswer === "") {
+                feedback.textContent = "❌ Please enter an answer!";
+                feedback.classList.remove('correct');
+                passwordReveal.style.display = 'none';
+                redirectButton.style.display = 'none'; // Hide redirect button if visible
+                return;
+            }
+
+            // Hash the user input
+            const userHash = await hashInput(userAnswer);
+
+            if (userHash === correctHash) {
+                feedback.textContent = "🎉 Correct! Decrypting your password... 🎉";
+                feedback.classList.add('correct');
+                // Decrypt the password using 'echo' as the key
+                const decryptedPassword = decryptPassword(encryptedPassword, userAnswer);
+                if (decryptedPassword) {
+                    passwordElement.textContent = decryptedPassword;
+                    passwordReveal.style.display = 'block';
+                    // Store the password in sessionStorage for the Login Page
+                    sessionStorage.setItem('password', decryptedPassword);
+                    // Show the redirect button
+                    redirectButton.style.display = 'block';
+                } else {
+                    feedback.textContent = "❌ Decryption failed. Please try again.";
+                    feedback.classList.remove('correct');
+                    passwordReveal.style.display = 'none';
+                    redirectButton.style.display = 'none'; // Hide redirect button if visible
+                }
+            } else {
+                feedback.textContent = "❌ Incorrect answer. Please try again!";
+                feedback.classList.remove('correct');
+                passwordReveal.style.display = 'none';
+                redirectButton.style.display = 'none'; // Hide redirect button if visible
+            }
+        });
+
+        // Allow pressing 'Enter' key to submit the answer
+        answerInput.addEventListener('keyup', (event) => {
+            if (event.key === 'Enter') {
+                submitButton.click();
+            }
+        });
+
+        // Event listener for the redirect button
+        redirectButton.addEventListener('click', () => {
+            // Replace 'welcome.html' with your target page
+            window.location.href = 'welcome.html';
         });
     </script>
 </body>
