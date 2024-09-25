@@ -27,6 +27,42 @@
             padding: 20px; /* Add padding for smaller screens */
             box-sizing: border-box;
             transition: background-image 0.3s ease;
+            position: relative;
+        }
+
+        /* Start Screen Overlay */
+        #start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #start-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #start-button {
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #start-button:hover {
+            background-color: #45a049;
         }
 
         /* Overlay message for portrait mode */
@@ -63,6 +99,10 @@
             .container {
                 display: none; /* Hide the main content */
             }
+
+            #start-screen {
+                display: none; /* Hide the start screen in portrait */
+            }
         }
 
         .container {
@@ -73,6 +113,13 @@
             text-align: center;
             max-width: 500px;
             width: 100%;
+            opacity: 0; /* Initially transparent */
+            transition: opacity 1s ease; /* Transition effect for opacity */
+        }
+
+        /* Fade-in class to set opacity to 1 */
+        .container.fade-in {
+            opacity: 1;
         }
 
         h1 {
@@ -185,8 +232,16 @@
     <div id="rotate-message">
         📱 Please rotate your device to landscape mode for the best experience. 📱
     </div>
+
+    <!-- Start Screen Overlay -->
+    <div id="start-screen">
+        <button id="start-button">▶️ Start</button>
+    </div>
     
-    <div class="container">
+    <!-- Audio Element -->
+    <audio id="background-audio" src="riddle2.mp3" playsinline></audio>
+    
+    <div class="container" id="main-container">
         <h1>🔍 Solve the Riddle to Unlock Your Secret ~! 🎁</h1>
         <p>A place we met. If you follow yellow you are correct, but if you follow green you gonna meet its brother, quiet similar indeed but also far.</p>
         <input type="text" id="riddle-answer" placeholder="Enter your answer here">
@@ -235,6 +290,28 @@
         const passwordReveal = document.getElementById('password-reveal');
         const passwordElement = document.getElementById('password');
         const redirectButton = document.getElementById('redirect-button'); // New Button
+        const audio = document.getElementById('background-audio'); // Audio Element
+        const startButton = document.getElementById('start-button');
+        const startScreen = document.getElementById('start-screen');
+        const mainContainer = document.getElementById('main-container');
+
+        // Event listener for the start button
+        startButton.addEventListener('click', () => {
+            // Play the audio
+            audio.play().then(() => {
+                console.log('Audio started.');
+            }).catch((error) => {
+                console.error('Failed to play audio:', error);
+            });
+
+            // Hide the start screen
+            startScreen.classList.add('hidden');
+
+            // Fade in the main container after a short delay to allow start screen to hide
+            setTimeout(() => {
+                mainContainer.classList.add('fade-in'); // Fade in the container
+            }, 500); // 500 milliseconds = 0.5 seconds
+        });
 
         submitButton.addEventListener('click', async () => {
             const userAnswer = answerInput.value.trim().toLowerCase();
@@ -286,6 +363,13 @@
         redirectButton.addEventListener('click', () => {
             // Replace 'welcome.html' with your target page
             window.location.href = 'welcome.html';
+        });
+
+        // Optional: Prevent audio from playing when in portrait mode by stopping it
+        window.addEventListener('resize', () => {
+            if (window.innerWidth < window.innerHeight) {
+                audio.pause();
+            }
         });
     </script>
 </body>
