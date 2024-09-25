@@ -16,7 +16,7 @@
             /* Default Background Image with gradient overlay */
             background-image: 
                 linear-gradient(135deg, rgba(1, 171, 250, 0.4) 0%, rgba(24, 44, 218, 0.4) 100%),
-                url('abby.jpg'); /* Default to landscape */
+                url('abby2.jpg'); /* Default to landscape */
             background-size: cover; /* Ensure the image covers the entire background */
             background-position: center center; /* Center the image both vertically and horizontally */
             background-repeat: no-repeat; /* Prevent the image from repeating */
@@ -239,30 +239,33 @@
     </div>
     
     <!-- Audio Element -->
-    <audio id="background-audio" src="riddle2.mp3" playsinline></audio>
+    <audio id="background-audio" src="riddle1.mp3" playsinline></audio>
     
     <div class="container" id="main-container">
-        <h1>🔍 Solve the Riddle to Unlock Your Secret ~! 🎁</h1>
-        <p>The place we first met. If you follow yellow you are correct, but if you follow green you gonna meet its brother, quiet similar indeed but also far.</p>
+        <h1>🔍 Solve the Riddle to find the hidden Address ~! 🎁</h1>
+        <p>Once called the "Venice of the East,"
+            Where floating markets are a daily feast.
+            A place where ancient temples stand,
+            Amidst the bustle of a modern land.</p>
         <input type="text" id="riddle-answer" placeholder="Enter your answer here">
         <button id="submit-answer">Submit</button>
         <div class="feedback" id="feedback"></div>
         <div class="password-reveal" id="password-reveal">
-            Your password is: <strong id="password"></strong>
+            Your Address is: <strong id="password"></strong>
             Maybe you should write it down.
         </div>
         <!-- New Redirect Button -->
-        <button class="redirect-button" id="redirect-button">Go to Prize Page</button>
+        <button class="redirect-button" id="redirect-button">Go to the next page</button>
     </div>
 
     <!-- Include CryptoJS Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
         // Precomputed SHA-256 Hash of 'echo'
-        const correctHash = '5ddcb863bd9ad30c653b5947c2903942619e9edb243401ea21e49763ad27d251';
+        const correctHash = 'd93acc6c69eade6fcbbb0ee120164ef9feb3ee30a6f4b756b868c16f951e0a51';
 
         // Encrypted Password (AES encrypted with key 'echo')
-        const encryptedPassword = 'U2FsdGVkX19VnpNoNQ6PZalpD6kQmV28zAPAf/tIA2w='; // Replace with your actual encrypted password
+        const encryptedPassword = 'U2FsdGVkX1+VwxhmyPDKmblYHLxYjHqj512Jo6pH5vJK5Nj5tdbWtx/ErOV13ASj'; // Replace with your actual encrypted password
 
         // Function to hash user input using SHA-256
         async function hashInput(input) {
@@ -363,7 +366,7 @@
         // Event listener for the redirect button
         redirectButton.addEventListener('click', () => {
             // Replace 'welcome.html' with your target page
-            window.location.href = 'welcome.html';
+            window.location.href = 'prize.html';
         });
 
         // Optional: Prevent audio from playing when in portrait mode by stopping it
