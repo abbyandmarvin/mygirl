@@ -16,7 +16,7 @@
             /* Default Background Image with gradient overlay */
             background-image: 
                 linear-gradient(135deg, rgba(1, 171, 250, 0.4) 0%, rgba(24, 44, 218, 0.4) 100%),
-                url('abby-landscape.jpg'); /* Default to landscape */
+                url('abby.jpg'); /* Default to landscape */
             background-size: cover; /* Ensure the image covers the entire background */
             background-position: center center; /* Center the image both vertically and horizontally */
             background-repeat: no-repeat; /* Prevent the image from repeating */
@@ -26,7 +26,7 @@
             align-items: center;
             padding: 20px; /* Add padding for smaller screens */
             box-sizing: border-box;
-            transition: transform 0.3s ease, background-image 0.3s ease;
+            transition: background-image 0.3s ease;
         }
 
         /* Overlay message for portrait mode */
@@ -40,7 +40,6 @@
             background: rgba(0,0,0,0.8);
             color: white;
             font-size: 1.5rem;
-            display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
@@ -49,27 +48,21 @@
             z-index: 9999;
         }
 
-        /* Rotate container when in portrait */
+        /* Show the rotate message and adjust background when in portrait */
         @media only screen and (orientation: portrait) {
-            body {
-                /* Rotate the container */
-                transform: rotate(90deg);
-                transform-origin: left top;
-                width: 100vh;
-                height: 100vw;
-                overflow-x: hidden;
-                position: absolute;
-                top: 100%;
-                left: 0;
-            }
             #rotate-message {
                 display: flex; /* Show the rotate message */
             }
 
-            /* Change background to portrait-friendly image */
-            background-image: 
-                linear-gradient(135deg, rgba(1, 171, 250, 0.4) 0%, rgba(24, 44, 218, 0.4) 100%),
-                url('abby-portrait.jpg'); /* Use a portrait-friendly image */
+            body {
+                background-image: 
+                    linear-gradient(135deg, rgba(1, 171, 250, 0.4) 0%, rgba(24, 44, 218, 0.4) 100%),
+                    url('abby-portrait.jpg'); /* Use a portrait-friendly image */
+            }
+
+            .container {
+                display: none; /* Hide the main content */
+            }
         }
 
         .container {
